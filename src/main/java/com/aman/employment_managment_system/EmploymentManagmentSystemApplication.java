@@ -35,12 +35,20 @@ public class EmploymentManagmentSystemApplication implements CommandLineRunner {
         employees.sort(new Comparator<Employee>() {
             @Override
             public int compare(Employee o1, Employee o2) {
-                int firstnameComparison = o1.getFirstname().compareTo(o2.getFirstname());
-                if (firstnameComparison != 0) {
-                    return firstnameComparison;
-                } else {
-                    return Double.compare(o1.getSalery(), o2.getSalery());
+
+                if(o1.getSalery()>o2.getSalery()){
+                    return 1;
+                }else if(o1.getSalery()== o2.getSalery()){
+                    int firstnameComparison = o2.getLastname().compareTo(o1.getLastname());
+                    if (firstnameComparison != 0) {
+                        return firstnameComparison;
+                    } else {
+                        return 0;
+                    }
+                }else {
+                    return -1;
                 }
+
             }
         });
         for (Employee employe : employees) {
