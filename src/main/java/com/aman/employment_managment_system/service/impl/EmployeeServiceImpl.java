@@ -22,7 +22,13 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Optional<Employee> updateEmployee(Employee employee) {
-        return Optional.of(employeeRepository.save(employee));
+        Optional<Employee> employee1 = employeeRepository.findById(employee.getId());
+        if(employee1.isPresent()){
+            employee1.get().setFirstname(employee.getFirstname());
+            employee1.get().setLastname(employee.getLastname());
+            employee1.get().setSalery(employee.getSalery());
+        }
+        return Optional.of(employeeRepository.save(employee1.get()));
     }
 
     @Override
