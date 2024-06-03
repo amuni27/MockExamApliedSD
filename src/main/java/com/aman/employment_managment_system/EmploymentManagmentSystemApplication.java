@@ -31,29 +31,35 @@ public class EmploymentManagmentSystemApplication implements CommandLineRunner {
         employeeService.addEmployee(employee2);
         employeeService.addEmployee(employee3);
         employeeService.addEmployee(employee4);
-        List<Employee> employees = employeeService.getAllEmployees();
-        employees.sort(new Comparator<Employee>() {
-            @Override
-            public int compare(Employee o1, Employee o2) {
-
-                if(o1.getSalery()>o2.getSalery()){
-                    return 1;
-                }else if(o1.getSalery()== o2.getSalery()){
-                    int firstnameComparison = o2.getLastname().compareTo(o1.getLastname());
-                    if (firstnameComparison != 0) {
-                        return firstnameComparison;
-                    } else {
-                        return 0;
-                    }
-                }else {
-                    return -1;
-                }
-
-            }
-        });
-        for (Employee employe : employees) {
-            System.out.println(employe.toString());
-        }
+//        List<Employee> employees = employeeService.getAllEmployees();
+//        employees.sort(new Comparator<Employee>() {
+//            @Override
+//            public int compare(Employee o1, Employee o2) {
+//                if(o1.getSalery()>o2.getSalery()){
+//                    return 1;
+//                }else if(o1.getSalery()== o2.getSalery()){
+//                    int firstnameComparison = o2.getLastname().compareTo(o1.getLastname());
+//                    if (firstnameComparison != 0) {
+//                        return firstnameComparison;
+//                    } else {
+//                        return 0;
+//                    }
+//                }else {
+//                    return -1;
+//                }
+//
+//            }
+//        });
+//        for (Employee employe : employees) {
+//            System.out.println(employe.toString());
+//        }
+        employeeService.getAllEmployees()
+                .stream()
+                .sorted(
+                        Comparator.comparing(Employee::getSalery)
+                                .thenComparing(Employee::getLastname, Comparator.reverseOrder())
+                )
+                .forEach(System.out::println);
 
     }
 }
